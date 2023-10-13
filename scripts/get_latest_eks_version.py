@@ -11,7 +11,10 @@ URL = 'https://docs.aws.amazon.com/eks/latest/userguide/doc-history.rss'
 
 if __name__ == '__main__':
     results = requests.get(URL).text
-    versions = set(v.strip('kubernetes-') for v in re.findall(r'kubernetes-1\.\d+', results))
+    versions = {
+        v.strip('kubernetes-')
+        for v in re.findall(r'kubernetes-1\.\d+', results)
+    }
 
     versions = sorted(versions, key=version.Version)
     versions.reverse()
